@@ -75,12 +75,13 @@
         /* Стиль кнопок */
         .button-container {
             position: absolute;
-            top: 20px;
+            bottom: 10px;
+            display: flex;
+            gap: 10px;
         }
-        
+
         .theme-button, .play-button {
-            margin: 5px;
-            padding: 10px 20px;
+            padding: 8px 16px;
             font-size: 1em;
             cursor: pointer;
             border: none;
@@ -97,7 +98,7 @@
         /* Стиль случайных надписей с радужным градиентом */
         .random-text {
             position: absolute;
-            font-size: 2em;
+            font-size: 1.5em; /* Меньше размер на мобильных */
             font-weight: bold;
             white-space: nowrap;
             background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
@@ -117,8 +118,12 @@
             }
 
             .theme-button, .play-button {
-                padding: 8px 16px;
+                padding: 6px 12px;
                 font-size: 0.9em;
+            }
+
+            .random-text {
+                font-size: 1em; /* Уменьшение случайных надписей */
             }
         }
 
@@ -129,8 +134,12 @@
             }
 
             .theme-button, .play-button {
-                padding: 9px 18px;
+                padding: 8px 16px;
                 font-size: 1em;
+            }
+
+            .random-text {
+                font-size: 1.2em;
             }
         }
     </style>
@@ -181,12 +190,13 @@
                 randomText.style.opacity = '0';
                 setTimeout(() => {
                     randomText.remove();
-                }, 1000);
-            }, 1000);
+                }, 500);
+            }, 500);
         }
 
         // Создаем случайные надписи каждые 0.5 секунды
-        setInterval(createRandomText, 500);
+        setInterval(createRandomText, 100);
     </script>
 </body>
 </html>
+
