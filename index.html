@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт Панк Баскета</title>
+    <style>
+        /* Основные стили */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.4s ease;
+        }
+
+        /* Стандартная тема */
+        body.standard {
+            background-color: #f0f0f0;
+            color: black;
+        }
+
+        /* Кислотная тема с меняющимся фоном */
+        body.acid {
+            animation: backgroundColorChange 0.4s infinite alternate;
+        }
+
+        /* Инвертированная тема */
+        body.inverted {
+            background-color: black;
+            color: white;
+        }
+
+        /* Анимация для кислотного фона */
+        @keyframes backgroundColorChange {
+            0% { background-color: #ff00ff; }
+            25% { background-color: #00ff00; }
+            50% { background-color: #00ffff; }
+            75% { background-color: #ff0000; }
+            100% { background-color: #ffff00; }
+        }
+
+        /* Бегущая строка с радужным градиентом */
+        .marquee {
+            font-size: 2em;
+            font-weight: bold;
+            white-space: nowrap;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: scroll 2s linear infinite, rainbow 3s linear infinite;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Анимация движения текста от правого к левому краю */
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Анимация переливающегося текста */
+        @keyframes rainbow {
+            0% { background-position: 0%; }
+            100% { background-position: 100%; }
+        }
+
+        /* Стиль кнопок */
+        .button-container {
+            position: absolute;
+            top: 20px;
+        }
+        
+        .theme-button, .play-button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .theme-button:hover, .play-button:hover {
+            background-color: #555;
+        }
+
+        /* Стиль случайных надписей с радужным градиентом */
+        .random-text {
+            position: absolute;
+            font-size: 2em;
+            font-weight: bold;
+            white-space: nowrap;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: rainbow 3s linear infinite;
+            opacity: 1;
+            transition: opacity 1s ease;
+            pointer-events: none; /* Чтобы текст не мешал кликам */
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 600px) {
+            .marquee {
+                font-size: 1.5em;
+            }
+
+            .theme-button, .play-button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Адаптивность для планшетов */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .marquee {
+                font-size: 1.8em;
+            }
+
+            .theme-button, .play-button {
+                padding: 9px 18px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body class="standard">
+    <div class="button-container">
+        <button class="theme-button" onclick="setTheme('standard')">Стандартная</button>
+        <button class="theme-button" onclick="setTheme('acid')">Кислотная</button>
+        <button class="theme-button" onclick="setTheme('inverted')">Инвертированная</button>
+        <button class="play-button" onclick="playMusic()">Включить музыку</button>
+    </div>
+    <div class="marquee">ПИДАРАСЫ</div>
+
+    <!-- Аудио элемент -->
+    <audio id="background-music" loop>
+        <source src="https://storage4.lightaudio.ru/dm/399fba62/3bb509b5/Quattro%20Doge%20%E2%80%94%20Oholero%20Freddy%20Fazbear.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <script>
+        function setTheme(theme) {
+            document.body.className = theme; // Устанавливаем выбранную тему, очищая предыдущие классы
+        }
+
+        function playMusic() {
+            const audio = document.getElementById("background-music");
+            audio.play();
+        }
+
+        // Функция для создания случайной радужной надписи
+        function createRandomText() {
+            const randomText = document.createElement('div');
+            randomText.className = 'random-text';
+            randomText.textContent = 'ПИДАРАСЫ';
+
+            // Случайные координаты
+            const randomX = Math.random() * window.innerWidth;
+            const randomY = Math.random() * window.innerHeight;
+
+            // Устанавливаем позицию
+            randomText.style.left = `${randomX}px`;
+            randomText.style.top = `${randomY}px`;
+
+            document.body.appendChild(randomText);
+
+            // Удаляем надпись через 2 секунды
+            setTimeout(() => {
+                randomText.style.opacity = '0';
+                setTimeout(() => {
+                    randomText.remove();
+                }, 1000);
+            }, 1000);
+        }
+
+        // Создаем случайные надписи каждые 0.5 секунды
+        setInterval(createRandomText, 500);
+    </script>
+</body>
+</html>
